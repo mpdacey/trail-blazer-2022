@@ -20,6 +20,7 @@ public class GameMaster : MonoBehaviour
     public GameObject player;
     public GameObject emeraldTime;
     public GameObject resetGraffiti;
+    public GameObject mobileControls;
     public Image resetOverlay;
     public SunSetting sun;
     public AudioManager audioManager;
@@ -248,6 +249,8 @@ public class GameMaster : MonoBehaviour
         {
             isPaused = !isPaused;
 
+            mobileControls.SetActive(!isPaused);
+
             pauseScreen.SetActive(isPaused);
             if (isPaused) SetUIVolumeSliders(pauseScreen);
 
@@ -263,6 +266,7 @@ public class GameMaster : MonoBehaviour
         SetUIVolumeSliders(titleScreen);
         ResetToTitleStatus();
         resetButton.SetActive(false);
+        mobileControls.SetActive(false);
 
         titleScreen.GetComponentsInChildren<Button>()[0].interactable = PlayerPrefs.HasKey(TORCH_KEY);
         emeraldTime.SetActive(trialMaster.unlockedTorches[2]);
@@ -405,6 +409,7 @@ public class GameMaster : MonoBehaviour
         }
 
         titleScreen.SetActive(false);
+        mobileControls.SetActive(true);
     }
 
     // Conversion Solution Reference: https://stackoverflow.com/a/6758238
