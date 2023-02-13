@@ -8,9 +8,6 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 1;
     public float jumpforce = 5;
     public LayerMask groundLayer;
-    public Joystick mobileJoyStick;
-    public Button mobileJump;
-    public bool isMobile = true;
     public bool HasJumped
     {
         get { return jumpPressed; }
@@ -32,24 +29,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        if (isMobile) mobileJump.onClick.AddListener(() => jumpPressed = true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isMobile)
-        {
-            horizontalInput = mobileJoyStick.Horizontal;
-            verticalInput = mobileJoyStick.Vertical;
-        }
-        else
-        {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
-            jumpPressed = Input.GetButton("Jump");
-        }
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+        jumpPressed = Input.GetButton("Jump");
     }
 
     private void FixedUpdate()
@@ -74,9 +61,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpPressed = false;
             }
 
-            //Thanks Michael Hinz :)
             isGrounded = Physics.Linecast(transform.position, transform.position + Vector3.down / 5.5f, groundLayer);
-            //Debug.DrawLine(transform.position, transform.position + Vector3.down / 6.5f, Color.blue);
         }
     }
 
